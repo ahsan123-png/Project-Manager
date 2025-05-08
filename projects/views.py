@@ -1,6 +1,3 @@
-# views.py
-
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from .models import Project , Client
 from .serializers import ClientSerializer
 from .serializers import ProjectSerializer, ProjectStatusSerializer
-
+# =========== views.py ===========
 class ClientView(APIView):
     @extend_schema(responses={200: ClientSerializer(many=True)})
     def get(self, request):
