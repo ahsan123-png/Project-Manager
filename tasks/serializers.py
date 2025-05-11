@@ -5,7 +5,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
-        read_only_fields = ('id', 'project', 'assigned_to', 'deadline', 'title', 'description')
+        # read_only_fields = ('id', 'project', 'assigned_to', 'deadline', 'title', 'description')
 
 class MilestoneSerializer(serializers.ModelSerializer):
     manager = serializers.SerializerMethodField(read_only=True)

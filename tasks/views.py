@@ -2,13 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiParameter,extend_schema_view,OpenApiRequest,OpenApiExample,OpenApiResponse
 from django.shortcuts import get_object_or_404
 
 from .models import Milestone, MilestoneStatus, Task, TaskStatus
 from .serializers import MilestoneSerializer, TaskSerializer
 from users.models import UserRole
-
 
 class TaskCRUDView(APIView):
     permission_classes = [IsAuthenticated]
@@ -116,7 +115,6 @@ class TaskCRUDView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @extend_schema(
-        request=TaskSerializer,
         parameters=[
             OpenApiParameter(
                 name='task_id',
@@ -125,7 +123,43 @@ class TaskCRUDView(APIView):
                 description="Task ID for specific task update."
             )
         ],
-        responses={200: TaskSerializer}
+        request=OpenApiRequest(
+            request=TaskSerializer,
+            examples=[
+                OpenApiExample(
+                    'Employee Update Example',
+                    summary='Employee can only update these fields',
+                    description='Employees can only modify status and notes fields',
+                    value={
+                        'status': 'in_progress',
+                        'notes': 'Working on this task'
+                    },
+                    request_only=True,
+                    response_only=False
+                ),
+                OpenApiExample(
+                    'Manager Update Example',
+                    summary='Manager can update all fields',
+                    description='Managers can modify any task field',
+                    value={
+                        'title': 'Updated task title',
+                        'description': 'Updated description',
+                        'status': 'completed',
+                        'notes': 'Manager notes',
+                        'assigned_to': 2,
+                        'deadline': '2023-12-31T23:59:59Z',
+                        'milestone': 1
+                    },
+                    request_only=True,
+                    response_only=False
+                )
+            ]
+        ),
+        responses={
+            200: TaskSerializer,
+            403: OpenApiResponse(description="Forbidden - Insufficient permissions"),
+            400: OpenApiResponse(description="Bad request - Invalid data")
+        }
     )
     def patch(self, request):
         task_id = request.query_params.get('task_id')
