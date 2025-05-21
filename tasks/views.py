@@ -8,9 +8,9 @@ from django.shortcuts import get_object_or_404
 from .models import Milestone, MilestoneStatus, Task, TaskStatus
 from .serializers import MilestoneSerializer, TaskSerializer
 from users.models import UserRole
-
+# from projects.models import Project
 class TaskCRUDView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  
 
     def get_queryset(self):
         """Optimized base queryset with select_related and prefetch_related"""
