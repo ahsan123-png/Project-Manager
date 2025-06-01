@@ -6,7 +6,7 @@ from .services import ReportGenerator
 from drf_spectacular.utils import extend_schema
 import logging
 from django.core.cache import cache
-
+import json
 logger = logging.getLogger(__name__)
 
 class ReportCreateView(generics.CreateAPIView):

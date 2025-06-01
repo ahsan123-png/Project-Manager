@@ -2,7 +2,6 @@ from django.db import models
 from users.models import UserEx
 from projects.models import Project
 from enum import Enum
-import uuid
 
 class ReportType(Enum):
     PROJECT_PROGRESS = 'project_progress'
@@ -14,7 +13,6 @@ class ReportType(Enum):
         return [(item.value, item.name.replace('_', ' ').title()) for item in cls]
 
 class Report(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     report_type = models.CharField(max_length=20, choices=ReportType.choices())
     generated_by = models.ForeignKey(
         UserEx,
