@@ -3,9 +3,10 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.db import transaction
 from .models import Notification
-from projects.models import Project, Service
+from projects.models import Project
+from services.models import Service
 from tasks.models import Task, Milestone
-from users.models import User
+from users.models import UserEx as User
 from asgiref.sync import async_to_sync
 import logging
 
