@@ -10,4 +10,5 @@ urlpatterns = [
     path('tasks/', include('tasks.urls')),  # Your API endpoints
     path('api/auth/', include('users.urls')),  # Your API endpoints
     # path('api/docs/', include('api.schema_urls')),  # Docs
+    path('api/notifications/', include('notifications.urls'))
 ]
