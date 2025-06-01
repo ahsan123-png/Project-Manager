@@ -11,11 +11,12 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes,
 import logging
 import asyncio
 from asgiref.sync import sync_to_async
-
+from rest_framework.generics import GenericAPIView
 
 logger = logging.getLogger(__name__)
 @extend_schema(tags=["User"])
-class UserView(APIView):
+class UserView(GenericAPIView):
+    serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
     @extend_schema(

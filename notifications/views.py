@@ -5,18 +5,24 @@ from .models import Notification
 from .serializers import NotificationSerializer
 from drf_spectacular.utils import extend_schema
 import logging
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
+
 
 logger = logging.getLogger(__name__)
 
 class NotificationListView(generics.ListAPIView):
     serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @extend_schema(
         description="List all notifications (marks as read on fetch)",
         responses={200: NotificationSerializer(many=True)}
     )
     def get_queryset(self):
+        user = self.request.user
+        if not user or not user.is_authenticated:
+            raise PermissionDenied("Authentication required")
         try:
             # Single atomic query for read+update
             with transaction.atomic():
