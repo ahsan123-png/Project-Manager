@@ -125,6 +125,11 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Project Tracker API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'ENUM_NAME_OVERRIDES': {
+        'MilestoneStatusEnum': 'tasks.models.MilestoneStatus',
+        'TaskStatusEnum': 'tasks.models.TaskStatus',
+        'ProjectStatusEnum': 'projects.models.ProjectStatus',
+    },
 
     # JWT Authentication Setup (used for docs, not actual auth)
     'AUTHENTICATION_WHITELIST': [

@@ -18,7 +18,7 @@ class Milestone(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     deadline = models.DateField(db_index=True)
-    status = models.CharField(
+    milestone_status = models.CharField(
         max_length=20,
         choices=MilestoneStatus.choices(),
         default=MilestoneStatus.PLANNING.value,
@@ -34,7 +34,7 @@ class Milestone(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['status'], name='milestone_status_idx'),
+            models.Index(fields=['milestone_status'], name='milestone_status_idx'),
             models.Index(fields=['deadline'], name='milestone_deadline_idx'),
         ]
         ordering = ['deadline']
@@ -65,7 +65,7 @@ class TaskStatus(Enum):
 class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    status = models.CharField(
+    task_status = models.CharField(
         max_length=20,
         choices=TaskStatus.choices(),
         default=TaskStatus.NOT_STARTED.value,
@@ -95,7 +95,7 @@ class Task(models.Model):
     class Meta:
         indexes = [
             # Combined index for status and deadline
-            models.Index(fields=['status', 'deadline'], name='task_status_deadline_idx'),
+            models.Index(fields=['task_status', 'deadline'], name='task_status_deadline_idx'),
             # Single column indexes only where needed
             models.Index(fields=['assigned_to'], name='task_assigned_to_idx'),
         ]
