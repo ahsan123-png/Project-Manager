@@ -29,7 +29,7 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     start_date = models.DateField()
     deadline = models.DateField(db_index=True)
-    status = models.CharField(
+    project_status = models.CharField(
         max_length=20,
         choices=ProjectStatus.choices(),
         default=ProjectStatus.NOT_STARTED.value,
@@ -52,6 +52,6 @@ class Project(models.Model):
         indexes = [
             models.Index(fields=['name'], name='project_name_idx'),
             models.Index(fields=['deadline'], name='project_deadline_idx'),
-            models.Index(fields=['status'], name='project_status_idx'),
+            models.Index(fields=['project_status'], name='project_status_idx'),
             models.Index(fields=['manager'], name='project_manager_idx'),
         ]

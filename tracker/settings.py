@@ -125,29 +125,34 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Project Tracker API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    
-    # JWT Authentication Setup
+    'ENUM_NAME_OVERRIDES': {
+        'MilestoneStatusEnum': 'tasks.models.MilestoneStatus',
+        'TaskStatusEnum': 'tasks.models.TaskStatus',
+        'ProjectStatusEnum': 'projects.models.ProjectStatus',
+    },
+
+    # JWT Authentication Setup (used for docs, not actual auth)
     'AUTHENTICATION_WHITELIST': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    
-    # Security Scheme (for Swagger UI)
+
+    # Security Scheme for Swagger UI
+    'COMPONENT_SPLIT_REQUEST': True,  # optional, helps with request/response schemas
     'SECURITY_SCHEMES': {
         'JWT': {
             'type': 'http',
             'scheme': 'bearer',
-            'bearerFormat': 'JWT',
+            'bearerFormat': 'JWT',  # Optional, but improves clarity in Swagger UI
         }
     },
-    
-    # Apply security globally
+
+    # Apply the JWT security scheme globally to all endpoints
     'SECURITY': [{'JWT': []}],
-    
-    # UI Settings
+
+    # Swagger UI settings
     'SWAGGER_UI_SETTINGS': {
         'deepLinking': True,
         'persistAuthorization': True,
         'displayOperationId': True,
     },
 }
-AUTH_USER_MODEL = 'users.UserEx'  # Format: 'app_name.ModelName'

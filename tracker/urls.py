@@ -4,8 +4,13 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # Your API endpoints
-    path('project/', include('projects.urls')),  # Your API endpoints
+    path('', include('api.urls')),  # Your API endpoints
+    path('', include('projects.urls')),  # Your API endpoints
+    path('', include('services.urls')),  # Your API endpoints
+    path('tasks/', include('tasks.urls')),  # Your API endpoints
     path('api/auth/', include('users.urls')),  # Your API endpoints
     # path('api/docs/', include('api.schema_urls')),  # Docs
+    path('api/notifications/', include('notifications.urls')),
+    path('api/reports/', include('reports.urls')),  # Your API endpoints
+    
 ]
